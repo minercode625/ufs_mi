@@ -19,7 +19,7 @@ function res = c_sep(data, y_pred)
   Mo = mean(data); 
   Sb = 0;
   for i = 1:c_num
-    Sb = Sb + (c_mean(i, :) - Mo)' * (c_mean(i, :) - Mo);
+    Sb = Sb + (c_mean(i, :) - Mo) * (c_mean(i, :) - Mo)';
   end
-  res = trace(inv(Sb) * Sw) 
+  res = trace(inv(Sb) * Sw);
 end

@@ -37,12 +37,12 @@ function res = ent(data)
       res = res + temp;
     end
   end
-  res = -res
+  res = -res;
 end
 
 function d = dpq(p,q, data, max_val, min_val)
   d = 0;
-  for i = 1:M
+  for i = 1:size(data,2)
     local_d = (data(p, i) - data(q, i)) / (max_val(i) - min_val(i));
     d = d + local_d^2;
   end
