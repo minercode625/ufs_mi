@@ -2,19 +2,19 @@ load('exp_setting.mat');
 max_fea = 300;
 clus_iter = 50;
 param_arr = [0.01, 0.1, 1, 10, 100];
-
+idx = 0;
 param_struct = struct('alg', {}, 'param', {}, 'fea', {}, 'time', {});
-idx = 1;
-param_struct(idx).alg = 'LS';
-param_struct(idx).param = 0;
-param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
-param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
-
-idx = idx+1;
-param_struct(idx).alg = 'MAX_VAR';
-param_struct(idx).param = 0;
-param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
-param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
+% idx = 1;
+% param_struct(idx).alg = 'LS';
+% param_struct(idx).param = 0;
+% param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+% param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
+% 
+% idx = idx+1;
+% param_struct(idx).alg = 'MAX_VAR';
+% param_struct(idx).param = 0;
+% param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+% param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 
 % idx = idx+1;
 % param_struct(idx).alg = 'CNAFS';
@@ -51,6 +51,23 @@ param_struct(idx).param = make_param_mat(param_arr, 2);
 param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
 param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 
+idx = idx+1;
+param_struct(idx).alg = 'RUFS';
+param_struct(idx).param = make_param_mat(param_arr, 2);
+param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
+
+idx = idx+1;
+param_struct(idx).alg = 'SOCFS';
+param_struct(idx).param = make_param_mat(param_arr, 2);
+param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
+
+idx = idx+1;
+param_struct(idx).alg = 'U2FS';
+param_struct(idx).param = 0;
+param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 % idx = idx+1;
 % param_struct(idx).alg = 'FMIUFS';
 % param_struct(idx).param = [0.4; 0.5; 0.6; 0.7; 0.8; 0.9; 1.0; 1.1;];
@@ -69,11 +86,11 @@ param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 % param_struct(8).param = [a(:), b(:)];
 % param_struct(8).fea = zeros(size(param_struct(8).param, 1), max_fea);
 
-idx = idx+1;
-param_struct(idx).alg = 'IUFS';
-param_struct(idx).param = 0;
-param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
-param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
+% idx = idx+1;
+% param_struct(idx).alg = 'IUFS';
+% param_struct(idx).param = 0;
+% param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+% param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 
 idx = idx+1;
 param_struct(idx).alg = 'PROP';

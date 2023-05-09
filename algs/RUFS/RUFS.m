@@ -1,4 +1,4 @@
-function [ W, F, G ] = RUFS(X, L, G0, options)
+function Feat = RUFS(X, c, alpha, beta)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is the code for the Auto-UFSTool, which is an Automatic Unspervised %
 % Feature Selection Toolbox                                                %
@@ -60,14 +60,30 @@ function [ W, F, G ] = RUFS(X, L, G0, options)
 % *************************************************************************
 
 %% Paramters setup
-
-MaxIter = options.MaxIter;
-epsilon = options.epsilon;
-nu = options.nu;
-a = options.alpha;
-b = options.beta;
+data = X';
+num = size( data, 2 );    
+k = 5;
+distX = L2_distance_1( data, data );
+[ distX1, idx ] = sort( distX, 2 );
+A = zeros( num );
+for i = 1 : num
+    di = distX1( i, 2:k+2 );
+    id = idx( i, 2:k+2 );
+    A( i, id ) = ( di(k+1) - di )/( k * di(k+1) - sum( di(1:k) ) + eps );
+end
+A0 = 0.5 * ( A + A' );
+[ Label, L, ~ ] = sc( A0, c );
+G0 = zeros( num, c );
+for i = 1 : num
+    G0( i, Label(i) ) = 1;
+end
+MaxIter = 100;
+epsilon = 0.0001;
+nu = 0.1;
+a = alpha;
+b = beta;
 zeta = 1e7;
-verbose = options.verbose;
+verbose = 0;
 
 L = nu * L;
 if issparse(L)
@@ -170,7 +186,7 @@ while true
     end
     
 end
-
+[~, Feat] = sort(sum(W.^2,2), 'descend');
 end
 
 function [ G, PGrad ] = UpdateG(X, F, W, L, mu, s, G0)

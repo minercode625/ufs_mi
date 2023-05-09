@@ -37,6 +37,16 @@ switch name
         [~, idx, ~] = EGCFS_TNNLS(X', c_num, param(1, 1), param(1, 2), m);
         idx = idx(1:m, 1);
         idx = idx';
+    case 'RUFS'
+        idx = RUFS(X, c_num, param(1, 1), param(1, 2));
+        idx = idx(1:m, 1);
+        idx = idx';
+    case 'SOCFS'
+        idx = SOCFS(X, round(X/2), param(1, 1), param(1, 2));
+        idx = idx(1, 1:m);
+    case 'U2FS'
+        idx = u2fs(X, c_num, m, {});
+        idx = idx';
     case 'FMIUFS'
         idx = FMIUFS(X, param(1,1));
         idx = idx(1, 1:m);
