@@ -16,7 +16,7 @@ for k = 1:length(file_list)
         temp_param = param_struct(m).param;
         temp_fea = param_struct(m).fea;
         temp_time = param_struct(m).time;
-        
+        fea = normalize(fea);
         parfor n = 1:length(temp_param)
            tic
            idx =  ufs_alg(alg, fea, gnd, max_fea, temp_param(n,:));
