@@ -18,7 +18,7 @@ for k = 1:length(file_list)
         temp_time = param_struct(m).time;
         parfor n = 1:length(temp_param)
            tic
-           idx =  ufs_alg(alg, fea, Y_train, max_fea, temp_param(n,:));
+           idx =  ufs_alg(alg, fea, gnd, max_fea, temp_param(n,:));
            temp_fea(n, :) = idx;
            temp_time(n,1) = toc;
         end
