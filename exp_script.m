@@ -4,7 +4,7 @@ output_dir = './result/';
 if ~exist(output_dir, 'dir')
     mkdir(output_dir);
 end
-for k = 13:length(file_list)
+for k = 1:length(file_list)
     load exp_setting.mat
     fprintf('%d Start\n', k);
     load(file_list{k})

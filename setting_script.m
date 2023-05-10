@@ -57,11 +57,11 @@ param_struct(idx).param = make_param_mat(param_arr, 2);
 param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
 param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 
-idx = idx+1;
-param_struct(idx).alg = 'SOCFS';
-param_struct(idx).param = make_param_mat(param_arr, 2);
-param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
-param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
+% idx = idx+1;
+% param_struct(idx).alg = 'SOCFS';
+% param_struct(idx).param = make_param_mat(param_arr, 2);
+% param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
+% param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 
 idx = idx+1;
 param_struct(idx).alg = 'U2FS';
