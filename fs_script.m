@@ -12,6 +12,7 @@ rep_size = 50;
 max_fs_size = 50;
 
 for k = 1:length(list)
+    fprintf('%d Start\n', k);
     file_name = list(k).name;
     data_name = replace(file_name, '_exp', '');
     load(sprintf('%s%s',data_dir, data_name));
@@ -55,8 +56,8 @@ for k = 1:length(list)
         res(alg_idx).S_std = s_std_table;
         res(alg_idx).E = e_table;
         res(alg_idx).E_std = e_std_table;
-        res(alg_idx).R = r_table;
-        res(alg_idx).R_std = r_std_table;
+        res(alg_idx).R = f_table;
+        res(alg_idx).R_std = f_std_table;
     end
     save_name = replace(file_name, '_exp', '_res');
     save_dir = sprintf('%s%s', output_dir, save_name);
