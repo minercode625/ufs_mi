@@ -1,6 +1,6 @@
 clear;
 check = [];
-for n = 5:5:50
+for n = 50:50:250
   file_list = dir('./result_fs/*.mat');
   res = load(['./result_fs/' file_list(1).name]);
   res = res.res;

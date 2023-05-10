@@ -1,5 +1,5 @@
 clear;
-n_fc = 30;
+n_fc = 50;
 file_list = dir('./result_fs/*.mat');
 res = load(['./result_fs/' file_list(1).name]);
 res = res.res;

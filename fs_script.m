@@ -9,7 +9,7 @@ end
 list = dir(sprintf('%s*.mat', exp_dir));
 
 rep_size = 50;
-max_fs_size = 50;
+max_fs_size = 250;
 
 for k = 1:length(list)
     fprintf('%d Start\n', k);
@@ -21,7 +21,7 @@ for k = 1:length(list)
     Y = gnd;
     [~, col] = size(X);
     max_col = min(max_fs_size, col);
-    fs_size = 5:5:max_col;
+    fs_size = 50:50:max_col;
     res = struct('alg', {}, 'S', {}, 'S_std', {}, 'E', {}, 'R', {}, 'F', {});
     for alg_idx = 1:length(param_struct)
         alg = param_struct(alg_idx).alg;
@@ -34,7 +34,7 @@ for k = 1:length(list)
         for param_idx = 1:length(param)
             fs_list = param_struct(alg_idx).fea;
             fea = fs_list(param_idx,:);
-            for fs_idx = 1:length(fs_size)
+            parfor fs_idx = 1:length(fs_size)
                 fs = fs_size(fs_idx);
                 X_fs = X(:, fea(1:fs));
                 [p_res, s_res] = kmeans_rng(X_fs, Y, rep_size, X);
