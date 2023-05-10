@@ -3,7 +3,9 @@ function res = ffei(x, x_origin)
 
 % Calculate the distance between patterns in x and x_origin space
 dist_x = pdist(x);
+dist_x = squareform(dist_x);
 dist_xo = pdist(x_origin);
+dist_xo = squareform(dist_xo);
 d_x_max = max(dist_x);
 d_xo_max = max(dist_xo);
 
