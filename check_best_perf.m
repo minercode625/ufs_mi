@@ -5,19 +5,26 @@ for n = 50:50:250
   res = load(['./result_fs/' file_list(1).name]);
   res = res.res;
   alg_len = length(res);
-  s_res = zeros(length(file_list), alg_len);
-  s_idx = zeros(length(file_list), alg_len);
-  e_res = zeros(length(file_list), alg_len);
-  e_idx = zeros(length(file_list), alg_len);
-  r_res = zeros(length(file_list), alg_len);
-  r_idx = zeros(length(file_list), alg_len);
-  f_res = zeros(length(file_list), alg_len);
-  f_idx = zeros(length(file_list), alg_len);
-  act_fc = n / 5;
+  s_res = inf(length(file_list), alg_len);
+  s_idx = inf(length(file_list), alg_len);
+  e_res = inf(length(file_list), alg_len);
+  e_idx = inf(length(file_list), alg_len);
+  r_res = inf(length(file_list), alg_len);
+  r_idx = inf(length(file_list), alg_len);
+  f_res = inf(length(file_list), alg_len);
+  f_idx = inf(length(file_list), alg_len);
+  act_fc = n / 50;
   for i = 1:length(file_list)
     res = load(['./result_fs/' file_list(i).name]);
     res = res.res;
     for j = 1:alg_len
+      if j == 2
+          continue;
+      elseif j == 4
+          continue;
+      elseif j == 5
+          continue;
+      end
       s_res(i, j) = min(res(j).S(:, act_fc));
       r_res(i, j) = min(res(j).R(:, act_fc));
       e_res(i, j) = min(res(j).E(:, act_fc));

@@ -56,6 +56,9 @@ switch name
     case 'PROP'
         idx = proposed(X, m);
         idx = idx';
+    case 'RANK'
+        idx = rankufs(X, c_num, param(1, 1), param(1, 2), param(1, 3));
+        idx = idx';
 end
 end
 

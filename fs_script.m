@@ -1,58 +1,46 @@
 % get result of feature selction
 clear;
-exp_dir = './result/';
-data_dir = './data/';
-output_dir = './result_fs/';
-if ~exist(output_dir, 'dir')
-    mkdir(output_dir);
-end
-list = dir(sprintf('%s*.mat', exp_dir));
+list = dir('result');
+list = list(3:end);
 
 rep_size = 50;
-max_fs_size = 250;
+max_fs_size = 300;
 
 for k = 1:length(list)
-    fprintf('%d Start\n', k);
     file_name = list(k).name;
     data_name = replace(file_name, '_exp', '');
-    load(sprintf('%s%s',data_dir, data_name));
+    load(data_name);
     load(file_name);
-    X = fea;
-    Y = gnd;
     [~, col] = size(X);
     max_col = min(max_fs_size, col);
     fs_size = 50:50:max_col;
-    res = struct('alg', {}, 'S', {}, 'S_std', {}, 'E', {}, 'R', {}, 'F', {});
+    res = struct('alg', {}, 'acc', {}, 'acc_std', {}, 'nmi', {}, 'nmi_std', {});
     for alg_idx = 1:length(param_struct)
         alg = param_struct(alg_idx).alg;
         param = param_struct(alg_idx).param;
-        s_table = zeros(length(param), length(fs_size));
-        s_std_table = zeros(length(param), length(fs_size));
-        e_table = zeros(length(param), length(fs_size));
-        r_table = zeros(length(param), length(fs_size));
-        f_table = zeros(length(param), length(fs_size));
+        acc_table = zeros(length(param), length(fs_size));
+        nmi_table = zeros(length(param), length(fs_size));
         for param_idx = 1:length(param)
+            acc_std_table = zeros(length(param), length(fs_size));
+            nmi_std_table = zeros(length(param), length(fs_size));
             fs_list = param_struct(alg_idx).fea;
             fea = fs_list(param_idx,:);
-            parfor fs_idx = 1:length(fs_size)
+            for fs_idx = 1:length(fs_size)
                 fs = fs_size(fs_idx);
                 X_fs = X(:, fea(1:fs));
-                [p_res, s_res] = kmeans_rng(X_fs, Y, rep_size, X);
-                s_table(param_idx, fs_idx) = p_res(1,1);
-                s_std_table(param_idx, fs_idx) = s_res(1,1);
-                e_table(param_idx, fs_idx) = p_res(1,2);
-                r_table(param_idx, fs_idx) = p_res(1,3);
-                f_table(param_idx, fs_idx) = p_res(1,4);
+                [acc, nmi] = kmeans_rng(X_fs, Y, rep_size);
+                acc_table(param_idx, fs_idx) = acc(1,1);
+                acc_std_table(param_idx, fs_idx) = acc(1,2);
+                nmi_table(param_idx, fs_idx) = nmi(1,1);
+                nmi_std_table(param_idx, fs_idx) = nmi(1,2);
             end
         end
         res(alg_idx).alg = alg;
-        res(alg_idx).S = s_table;
-        res(alg_idx).S_std = s_std_table;
-        res(alg_idx).E = e_table;
-        res(alg_idx).R = r_table;
-        res(alg_idx).F = f_table;
+        res(alg_idx).acc = acc_table;
+        res(alg_idx).acc_std = acc_std_table;
+        res(alg_idx).nmi = nmi_table;
+        res(alg_idx).nmi_std = nmi_std_table;
     end
     save_name = replace(file_name, '_exp', '_res');
-    save_dir = sprintf('%s%s', output_dir, save_name);
-    save(save_dir, 'res');
+    save(save_name, 'res');
 end

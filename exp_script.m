@@ -7,7 +7,8 @@ end
 for k = 1:length(file_list)
     load exp_setting.mat
     fprintf('%d Start\n', k);
-    load(file_list{k})
+    fea = load(file_list{k}, 'fea').fea;
+    gnd = load(file_list{k}, 'gnd').gnd;
     for m = 1:length(param_struct)
         if size(fea, 2) < max_fea
             param_struct(m).fea = zeros(size(param_struct(m).param, 1), size(fea, 2));
