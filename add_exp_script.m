@@ -4,12 +4,12 @@ if ~exist(output_dir, 'dir')
     mkdir(output_dir);
 end
 file_list = dir('data/*.mat');
-for k = 4:length(file_list)
+for k = 3:3
     load exp_setting.mat
     fprintf('%d Start\n', k);
     fea = load(file_list(k).name, 'fea').fea;
     gnd = load(file_list(k).name, 'gnd').gnd;
-    for m = 1:length(param_struct)
+    for m = 9:length(param_struct)
         if size(fea, 2) < max_fea
             param_struct(m).fea = zeros(size(param_struct(m).param, 1), size(fea, 2));
         end
@@ -28,12 +28,9 @@ for k = 4:length(file_list)
         param_struct(m).time = temp_time;
         fprintf('%s finish\n', alg);
         file_name = file_list(k).name;
-        file_name = replace(file_name, '.mat', '_exp.mat'); 
+        file_name = replace(file_name, '.mat', '_exp_add.mat'); 
         save_dir = strcat(output_dir, file_name);
         save(save_dir, 'param_struct');
     end
     fprintf('%d finish\n', k);
 end
-!git add .
-!git commit -m "results"
-!git push origin master

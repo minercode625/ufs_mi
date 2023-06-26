@@ -42,7 +42,7 @@ switch name
         idx = idx(1:m, 1);
         idx = idx';
     case 'SOCFS'
-        idx = SOCFS(X, round(X/2), param(1, 1), param(1, 2));
+        idx = SOCFS(X, param(1, 1), param(1, 2));
         idx = idx(1, 1:m);
     case 'U2FS'
         idx = u2fs(X, c_num, m, {});
@@ -58,6 +58,7 @@ switch name
         idx = idx';
     case 'RANK'
         idx = rankufs(X, c_num, param(1, 1), param(1, 2), param(1, 3));
+        idx = idx(1:m, 1);
         idx = idx';
 end
 end

@@ -1,4 +1,4 @@
-function [ranking] = SOCFS(X, m, lambda1, lambda2, ITER1, ITER2)
+function [ranking] = SOCFS(X, lambda1, lambda2, ITER1, ITER2)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is the code for the Auto-UFSTool, which is an Automatic Unspervised %
 % Feature Selection Toolbox                                                %
@@ -36,35 +36,34 @@ function [ranking] = SOCFS(X, m, lambda1, lambda2, ITER1, ITER2)
 
  
 X = X'; % NOTE
+m = size(X,1);
+
 if nargin < 2
-    m = size(X,1);
+    lambda1 = 100;
 end
 
 if nargin < 3
-    lambda1 = 100;
-    m = size(X,1);
+    lambda2 = 100;
 end
 
 if nargin < 4
-    lambda2 = 100;
-    m = size(X,1);
+    ITER1 = 30;
 end
 
 if nargin < 5
-    ITER1 = 50;
-    m = size(X,1);
-end
-
-if nargin < 6
-    ITER2 = 50;
-    m = size(X,1);
+    ITER2 = 30;
 end
 
 % -----------------------------------------------    
 [d, n] = size(X);
 d2 = ones(d, 1);
-X = X - mean(X,2)* ones(1,n); 
-E = orth(rand(n,m));
+X = X - mean(X,2)* ones(1,n);
+if n > m
+    E = orth(rand(n,m));
+else
+    E = orth(rand(m,n));
+    E = E';
+end
 B = orth(rand(m,m));
 W = rand(d,m);
 
@@ -76,7 +75,8 @@ for iter = 1 : ITER1
     iter2 = 1;
     WXB = (W' * X + b * ones(1, n))' * B;
     while(iter2 <= ITER2)               
-        [LE, ~, RE] = svd(WXB + lambda2 * H, 'econ'); E = LE * RE';
+        [LE, ~, RE] = svd(WXB + lambda2 * H, 'econ');
+        E = LE * RE';
         H = 0.5 * (E + abs(E));   
         iter2 = iter2 + 1;    
     end

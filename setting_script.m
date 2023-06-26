@@ -1,4 +1,4 @@
-load('exp_setting.mat');
+clear;
 max_fea = 300;
 clus_iter = 50;
 param_arr = [0.001, 0.01, 0.1, 1, 10, 100, 1000];
@@ -103,6 +103,6 @@ param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 % param_struct(idx).fea = zeros(size(param_struct(idx).param, 1), max_fea);
 % param_struct(idx).time = zeros(size(param_struct(idx).param, 1), 1);
 
-save('exp_setting.mat', 'param_struct', '-append');
+save('exp_setting.mat', 'param_struct');
 save('exp_setting.mat', 'max_fea', '-append');
 save('exp_setting.mat', 'clus_iter', '-append');
