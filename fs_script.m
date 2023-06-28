@@ -6,7 +6,7 @@ data_dir = './data/';
 data_list = dir([data_dir, '*.mat']);
 data_list = {data_list.name};
 
-fs_dir = './result/'
+fs_dir = './result/';
 fs_list = dir([fs_dir, '*.mat']);
 fs_list = {fs_list.name};
 
