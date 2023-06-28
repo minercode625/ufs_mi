@@ -1,15 +1,18 @@
-function [res, s_res] = kmeans_rng(X, Y, trial, X_origin)
+function [acc_res, nmi_res] = kmeans_rng(X, Y, trial)
 rng(1);
 cluster = length(unique(Y));
-c_res = zeros(trial, 1);
-res = zeros(1, 4);
-res(1, 2) = ent(X);
-res(1, 3) = rep_ent(X);
-res(1, 4) = ffei(X, X_origin);
+acc = zeros(trial, 1);
+nmi = zeros(trial, 1);
 for k = 1:trial
     pred = kmeans(X, cluster);
-    c_res(k, 1) = c_sep(X, pred);
+    res = evalClustering(Y, pred);
+    acc(k, 1) = res.acc;
+    nmi(k, 1) = res.nmi_max;
 end
-res(1, 1) = mean(c_res);
-s_res = std(c_res);
+acc_res = zeros(1, 2);
+nmi_res = zeros(1, 2);
+acc_res(1, 1) = mean(acc);
+acc_res(1, 2) = std(acc);
+nmi_res(1, 1) = mean(nmi);
+nmi_res(1, 2) = std(nmi);
 end
