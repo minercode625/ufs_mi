@@ -19,18 +19,18 @@ max_fs_size = 300;
 for k = 9:length(data_list)
     k
     load(data_list{k});
-    load(fs_list{k});
     data_name = data_list{k}(1:end-4);
+    load(strcat(data_name, '_exp.mat'));
     [~, col] = size(fea);
     max_col = min(max_fs_size, col);
     fs_size = 50:50:max_col;
     res = struct('alg', {}, 'acc', {}, 'acc_std', {}, 'nmi', {}, 'nmi_std', {});
-    for alg_idx = 1:length(param_struct)
+    parfor alg_idx = 1:length(param_struct)
         alg = param_struct(alg_idx).alg;
         param = param_struct(alg_idx).param;
         acc_table = zeros(length(param), length(fs_size));
         nmi_table = zeros(length(param), length(fs_size));
-        parfor param_idx = 1:length(param)
+        for param_idx = 1:length(param)
             acc_std_table = zeros(length(param), length(fs_size));
             nmi_std_table = zeros(length(param), length(fs_size));
             fs_list = param_struct(alg_idx).fea;
