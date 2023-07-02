@@ -17,7 +17,7 @@ rep_size = 50;
 max_fs_size = 300;
 
 for k = 9:length(data_list)
-    k
+    fprintf('%d Start\n', k);
     load(data_list{k});
     data_name = data_list{k}(1:end-4);
     load(strcat(data_name, '_exp.mat'));
@@ -26,6 +26,7 @@ for k = 9:length(data_list)
     fs_size = 50:50:max_col;
     res = struct('alg', {}, 'acc', {}, 'acc_std', {}, 'nmi', {}, 'nmi_std', {});
     parfor alg_idx = 1:length(param_struct)
+        alg_idx
         alg = param_struct(alg_idx).alg;
         param = param_struct(alg_idx).param;
         acc_table = zeros(length(param), length(fs_size));
